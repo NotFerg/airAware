@@ -1,39 +1,140 @@
 $(function () {
-    $("#datepicker").datepicker({
-      onSelect: function (dateText) {
-        const selectedDate = new Date(dateText);
-        const year = selectedDate.getFullYear();
-        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-        const day = String(selectedDate.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
+  google.charts.load('current', { 'packages': ['gauge'] });
 
-        // Fetch data for the selected date
-        $.ajax({
-          url: '/fetch-data',
-          method: 'GET',
-          data: { date: formattedDate },
-          success: function (data) {
-            $('#data-container').empty();
-            if (data.length > 0) {
-              data.forEach(feed => {
-                $('#data-container').append(`<p>Created at: ${feed.created_at}</p>`);
-                $('#data-container').append(`<p>Field1: ${feed.field1}</p>`);
-                $('#data-container').append(`<p>Field2: ${feed.field2}</p>`);
-                $('#data-container').append(`<p>Field3: ${feed.field3}</p>`);
-                $('#data-container').append(`<p>Field4: ${feed.field4}</p>`);
-                $('#data-container').append(`<p>Field5: ${feed.field5}</p>`);
-                $('#data-container').append(`<p>Field6: ${feed.field6}</p>`);
-                $('#data-container').append(`<p>Field7: ${feed.field7}</p>`);
-                $('#data-container').append(`<p>Field8: ${feed.field8}</p>`);
-              });
-            } else {
-              $('#data-container').append('<p>No data available for the selected date.</p>');
-            }
-          },
-          error: function (error) {
-            console.error('Error fetching data:', error);
+  $("#datepicker").datepicker({
+    onSelect: function (dateText) {
+      const selectedDate = new Date(dateText);
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+
+      // Fetch data for the selected date
+      $.ajax({
+        url: '/fetch-data',
+        method: 'GET',
+        data: { date: formattedDate },
+        success: function (data) {
+          if (data.length > 0) {
+            google.charts.setOnLoadCallback(() => drawGauges(data[0]));
+          } else {
+            console.log('No data available for the selected date.');
           }
-        });
-      }
-    });
+        },
+        error: function (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+    }
   });
+
+  function drawGauges(data) {
+    // Data for gauges
+    var temperatureData = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Temperature', parseFloat(data.field1)]
+    ]);
+
+    var humidityData = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Humidity', parseFloat(data.field2)]
+    ]);
+
+    var airQualityData = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Air Quality', parseFloat(data.field3)]
+    ]);
+
+    var windSpeedData = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Wind Speed',parseFloat(data.field4)]
+    ]);
+
+    var pm1Data = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['PM 1.0', parseFloat(data.field6)]
+    ]);
+
+    var pm25Data = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['PM 2.5', parseFloat(data.field7)]
+    ]);
+
+    var pm100Data = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['PM 100', parseFloat(data.field8)]
+    ]);
+
+    // Options for each gauge
+    var temperatureOptions = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 95,
+      yellowFrom: 75, yellowTo: 90,
+      minorTicks: 5, max:95
+    };
+
+    var humidityOptions = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom: 75, yellowTo: 90,
+      minorTicks: 5
+    };
+
+    var airQualityOptions = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom: 75, yellowTo: 90,
+      minorTicks: 5, max:1000
+    };
+
+    var windSpeedOptions = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom: 75, yellowTo: 90,
+      minorTicks: 5
+    };
+
+    var pm1Options = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom: 75, yellowTo: 90,
+      minorTicks: 5
+    };
+
+    var pm25Options = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom: 75, yellowTo: 90,
+      minorTicks: 5
+    };
+
+    var pm100Options = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom: 75, yellowTo: 90,
+      minorTicks: 5
+    };
+
+    // Draw the gauge
+    var temperatureChart = new google.visualization.Gauge(document.getElementById('temperature-gauge'));
+      temperatureChart.draw(temperatureData, temperatureOptions);
+
+      var humidityChart = new google.visualization.Gauge(document.getElementById('humidity-gauge'));
+      humidityChart.draw(humidityData, humidityOptions);
+
+      var airQualityChart = new google.visualization.Gauge(document.getElementById('air-quality-gauge'));
+      airQualityChart.draw(airQualityData, airQualityOptions);
+
+      var windSpeedChart = new google.visualization.Gauge(document.getElementById('wind-speed-gauge'));
+      windSpeedChart.draw(windSpeedData, windSpeedOptions);
+
+      var pm1Chart = new google.visualization.Gauge(document.getElementById('pm1-gauge'));
+      pm1Chart.draw(pm1Data, pm1Options);
+
+      var pm25Chart = new google.visualization.Gauge(document.getElementById('pm2.5-gauge'));
+      pm25Chart.draw(pm25Data, pm25Options);
+
+      var pm10Chart = new google.visualization.Gauge(document.getElementById('pm10-gauge'));
+      pm10Chart.draw(pm100Data, pm100Options);
+  }
+});

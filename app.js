@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
-
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
 app.get('/', function (req, res) {
   res.render('index');  
@@ -22,7 +22,7 @@ app.get('/dashboard', async function (req, res) {
     const response = await axios.get(`https://api.thingspeak.com/channels/${process.env.CHANNEL_ID}/feeds.json`, {
       params: {
         api_key: process.env.READ_API_KEY,
-        results: 1
+        results: 1 // Fetch only the most recent data point
       }
     });
     const data = response.data.feeds;
@@ -36,14 +36,21 @@ app.get('/dashboard', async function (req, res) {
 
 app.get('/fetch-data', async function (req, res) {
   const selectedDate = req.query.date;
+  
+  if (!selectedDate) {
+    return res.status(400).send('Date parameter is required');
+  }
+
   try {
     const response = await axios.get(`https://api.thingspeak.com/channels/${process.env.CHANNEL_ID}/feeds.json`, {
       params: {
         api_key: process.env.READ_API_KEY,
-        start: selectedDate + 'T00:00:00Z',
-        end: selectedDate + 'T23:59:59Z'
+        start: `${selectedDate} 00:00:00`,
+        end: `${selectedDate} 23:59:59`,
+        results: 1 // Fetch only the most recent data point
       }
     });
+    
     const data = response.data.feeds;
     res.json(data);
   } catch (error) {
@@ -52,8 +59,9 @@ app.get('/fetch-data', async function (req, res) {
   }
 });
 
+
 app.get('/aboutUs', function (req, res) {
-    res.render('aboutUs');  
+  res.render('aboutUs');  
 });
 
 const PORT = 3000;

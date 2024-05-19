@@ -7,14 +7,14 @@
   <title>Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
-  <!-- NAVBAR -->
 
+  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg nav-underline">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">AirAware</a>
@@ -39,30 +39,235 @@
   </nav>
 
   <!-- Dashboard -->
-  <h1>Dashboard</h1>
+  <h1 class="text-center my-2">Dashboard</h1>
   <div>
-    <h2>Select Date to Fetch Data</h2>
-    <input type="text" id="datepicker">
-    <h2>Latest Data from ThingSpeak</h2>
-    <div id="data-container">
-      <% data.forEach(feed => { %>
-        <p>Created at: <%= feed.created_at %></p>
-        <p>Field1: <%= feed.field1 %></p>
-        <p>Field2: <%= feed.field2 %></p>
-        <p>Field3: <%= feed.field3 %></p>
-        <p>Field4: <%= feed.field4 %></p>
-        <p>Field5: <%= feed.field5 %></p>
-        <p>Field6: <%= feed.field6 %></p>
-        <p>Field7: <%= feed.field7 %></p>
-        <p>Field8: <%= feed.field8 %></p>
-      <% }) %>
+    <div class="container">
+      <div class="row my-5">
+        <div class="col-12 col-sm-12 col-md-6 text-center">
+          <h2>Select Date to Fetch Data</h2>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 text-center">
+          <input type="text" id="datepicker">
+        </div>
+      </div>
     </div>
+    <h2 class="text-center my-5">Latest Data from ThingSpeak</h2>
+    <% if (data && data.length> 0) { %>
+      <div class="container">
+        <div class="row my-3">
+          <div class="col-12 col-sm-12 col-md-6 text-center">
+            <h1>Temperature</h1>
+            <p>The Philippines typically experiences a tropical climate with average temperatures ranging from 25°C to
+              32°C throughout the year. These temperatures can vary slightly between the dry and wet seasons, with
+              coastal areas generally being warmer.</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+            <div id="temperature-gauge"></div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-12 col-sm-12 col-md-6 text-center">
+            <h1>Humidity</h1>
+            <p>The Philippines typically experiences high humidity levels, with average relative humidity ranging from
+              70% to 85% throughout the year. This high humidity is consistent with the country's tropical climate,
+              influenced by its proximity to the equator and surrounding seas.</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+            <div id="humidity-gauge"></div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-12 col-sm-12 col-md-6 text-center">
+            <h1>Air Quality</h1>
+            <p>Air quality in the Philippines varies significantly depending on the region, with urban areas like Metro
+              Manila often experiencing higher levels of pollution due to traffic and industrial activities. Monitoring
+              air quality is essential to manage health risks associated with pollutants.</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+            <div id="air-quality-gauge"></div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-12 col-sm-12 col-md-6 text-center">
+            <h1>Wind Speed</h1>
+            <p>In the Philippines, normal wind speeds typically range from 10 to 20 kilometers per hour (km/h) due to
+              its tropical maritime climate. However, wind speeds can increase significantly during typhoons and other
+              weather disturbances.</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+            <div id="wind-speed-gauge"></div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-12 col-sm-12 col-md-6 text-center">
+            <h1>PM 1</h1>
+            <p>Particulate matter with a diameter of 1 micrometer (PM1) is a common air pollutant in urban areas of the
+              Philippines, typically originating from vehicle emissions and industrial activities. Normal PM1 levels are
+              generally considered safe when they are below 10 µg/m³</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+            <div id="pm1-gauge"></div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-12 col-sm-12 col-md-6 text-center">
+            <h1>PM 2.5</h1>
+            <p>In the Philippines, PM2.5 levels typically vary based on urbanization and industrial activity, with rural
+              areas experiencing lower levels compared to cities like Manila. Normal PM2.5 levels are generally
+              considered safe when they are below 35 µg/m³, aligning with international air quality standards.</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+            <div id="pm2.5-gauge"></div>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-12 col-sm-12 col-md-6 text-center">
+            <h1>PM 10</h1>
+            <p>In the Philippines, normal PM100 levels typically range from 0 to 50 µg/m³, with variations based on
+              factors like industrial activities, vehicular emissions, and geographical location. Monitoring PM100 is
+              essential for assessing air quality and protecting public health from the adverse effects of particulate
+              matter pollution.</p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+            <div id="pm10-gauge"></div>
+          </div>
+        </div>
+      </div>
+
+      <% } else { %>
+        <p>No data available.</p>
+        <% } %>
   </div>
 
-  <script src="js/dashboard.js"></script>
+  <!-- FOOTER -->
+  <section class="py-4" style="background-color: #EEF7FF;">
+    <div class="text-center">
+      <h5>Copyright © 2024</h5>
+    </div>
+  </section>
+
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    var rawData = JSON.parse('<%- JSON.stringify(data) %>');
+    console.log(rawData);
+    google.charts.load('current', { 'packages': ['gauge'] });
+    google.charts.setOnLoadCallback(drawGauges);
+
+    function drawGauges() {
+
+      // Data for gauges
+      var temperatureData = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['Temperature', parseFloat(rawData[0].field1)]
+      ]);
+
+      var humidityData = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['Humidity', parseFloat(rawData[0].field2)]
+      ]);
+
+      var airQualityData = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['Air Quality', parseFloat(rawData[0].field3)]
+      ]);
+
+      var windSpeedData = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['Wind Speed', parseFloat(rawData[0].field4)]
+      ]);
+
+      var pm1Data = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['PM 1.0', parseFloat(rawData[0].field6)]
+      ]);
+
+      var pm25Data = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['PM 2.5', parseFloat(rawData[0].field7)]
+      ]);
+
+      var pm100Data = google.visualization.arrayToDataTable([
+        ['Label', 'Value'],
+        ['PM 100', parseFloat(rawData[0].field8)]
+      ]);
+
+      // Options for each gauge
+      var temperatureOptions = {
+        width: 400, height: 150,
+        redFrom: 40, redTo: 50,
+        yellowFrom: 30, yellowTo: 40,
+        minorTicks: 5, max: 50
+      };
+
+      var humidityOptions = {
+        width: 400, height: 150,
+        redFrom: 90, redTo: 100,
+        yellowFrom: 85, yellowTo: 90,
+        minorTicks: 5
+      };
+
+      var airQualityOptions = {
+        width: 400, height: 150,
+        redFrom: 100, redTo: 150,
+        yellowFrom: 51, yellowTo: 100,
+        minorTicks: 5, max: 150
+      };
+
+      var windSpeedOptions = {
+        width: 400, height: 150,
+        redFrom: 40, redTo: 50,
+        yellowFrom: 21, yellowTo: 40,
+        minorTicks: 5, max: 50
+      };
+
+      var pm1Options = {
+        width: 400, height: 150,
+        redFrom: 20, redTo: 30,
+        yellowFrom: 11, yellowTo: 20,
+        minorTicks: 5, max: 30
+      };
+
+      var pm25Options = {
+        width: 400, height: 150,
+        redFrom: 55, redTo: 70,
+        yellowFrom: 36, yellowTo: 55,
+        minorTicks: 5, max: 70
+      };
+
+      var pm100Options = {
+        width: 400, height: 150,
+        redFrom: 100, redTo: 150,
+        yellowFrom: 51, yellowTo: 100,
+        minorTicks: 5 ,max: 150
+      };
+
+      // Draw the gauges
+      var temperatureChart = new google.visualization.Gauge(document.getElementById('temperature-gauge'));
+      temperatureChart.draw(temperatureData, temperatureOptions);
+
+      var humidityChart = new google.visualization.Gauge(document.getElementById('humidity-gauge'));
+      humidityChart.draw(humidityData, humidityOptions);
+
+      var airQualityChart = new google.visualization.Gauge(document.getElementById('air-quality-gauge'));
+      airQualityChart.draw(airQualityData, airQualityOptions);
+
+      var windSpeedChart = new google.visualization.Gauge(document.getElementById('wind-speed-gauge'));
+      windSpeedChart.draw(windSpeedData, windSpeedOptions);
+
+      var pm1Chart = new google.visualization.Gauge(document.getElementById('pm1-gauge'));
+      pm1Chart.draw(pm1Data, pm1Options);
+
+      var pm25Chart = new google.visualization.Gauge(document.getElementById('pm2.5-gauge'));
+      pm25Chart.draw(pm25Data, pm25Options);
+
+      var pm10Chart = new google.visualization.Gauge(document.getElementById('pm10-gauge'));
+      pm10Chart.draw(pm100Data, pm100Options);
+    }
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+  <script src="js/dashboard.js"></script>
 </body>
 
 </html>
