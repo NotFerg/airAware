@@ -67,52 +67,52 @@ $(function () {
 
     // Options for each gauge
     var temperatureOptions = {
-      width: 400, height: 120,
-      redFrom: 90, redTo: 95,
-      yellowFrom: 75, yellowTo: 90,
-      minorTicks: 5, max:95
+      width: 400, height: 150,
+      redFrom: 40, redTo: 50,
+      yellowFrom: 30, yellowTo: 40,
+      minorTicks: 5, max: 50
     };
 
     var humidityOptions = {
-      width: 400, height: 120,
+      width: 400, height: 150,
       redFrom: 90, redTo: 100,
-      yellowFrom: 75, yellowTo: 90,
+      yellowFrom: 85, yellowTo: 90,
       minorTicks: 5
     };
 
     var airQualityOptions = {
-      width: 400, height: 120,
-      redFrom: 90, redTo: 100,
-      yellowFrom: 75, yellowTo: 90,
-      minorTicks: 5, max:1000
+      width: 400, height: 150,
+      redFrom: 100, redTo: 150,
+      yellowFrom: 51, yellowTo: 100,
+      minorTicks: 5, max: 150
     };
 
     var windSpeedOptions = {
-      width: 400, height: 120,
-      redFrom: 90, redTo: 100,
-      yellowFrom: 75, yellowTo: 90,
-      minorTicks: 5
+      width: 400, height: 150,
+      redFrom: 40, redTo: 50,
+      yellowFrom: 21, yellowTo: 40,
+      minorTicks: 5, max: 50
     };
 
     var pm1Options = {
-      width: 400, height: 120,
-      redFrom: 90, redTo: 100,
-      yellowFrom: 75, yellowTo: 90,
-      minorTicks: 5
+      width: 400, height: 150,
+      redFrom: 20, redTo: 30,
+      yellowFrom: 11, yellowTo: 20,
+      minorTicks: 5, max: 30
     };
 
     var pm25Options = {
-      width: 400, height: 120,
-      redFrom: 90, redTo: 100,
-      yellowFrom: 75, yellowTo: 90,
-      minorTicks: 5
+      width: 400, height: 150,
+      redFrom: 55, redTo: 70,
+      yellowFrom: 36, yellowTo: 55,
+      minorTicks: 5, max: 70
     };
 
     var pm100Options = {
-      width: 400, height: 120,
-      redFrom: 90, redTo: 100,
-      yellowFrom: 75, yellowTo: 90,
-      minorTicks: 5
+      width: 400, height: 150,
+      redFrom: 100, redTo: 150,
+      yellowFrom: 51, yellowTo: 100,
+      minorTicks: 5 ,max: 150
     };
 
     // Draw the gauge
