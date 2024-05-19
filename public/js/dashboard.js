@@ -2,6 +2,7 @@ $(function () {
   google.charts.load('current', { 'packages': ['gauge'] });
 
   $("#datepicker").datepicker({
+    maxDate: 0,
     onSelect: function (dateText) {
       const selectedDate = new Date(dateText);
       const year = selectedDate.getFullYear();
@@ -18,7 +19,15 @@ $(function () {
           if (data.length > 0) {
             google.charts.setOnLoadCallback(() => drawGauges(data[0]));
           } else {
-            console.log('No data available for the selected date.');
+            $("#dialog").html('No data available for the selected date.');
+            $("#dialog").dialog({
+              modal: true,
+              buttons: {
+                Ok: function() {
+                  $(this).dialog("close");
+                }
+              }
+            });
           }
         },
         error: function (error) {
