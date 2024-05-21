@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const axios = require('axios');
 const dotenv = require('dotenv');
+const cron = require('node-cron');
+const nodemailer = require('nodemailer');
 
 dotenv.config();
 app.set("view engine", "ejs");
