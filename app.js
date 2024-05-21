@@ -12,6 +12,42 @@ app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+const schedule = require('node-schedule');
+
+// Schedule a job to run at 6:30 PM every day
+schedule.scheduleJob('15 16 * * *', async function() {
+  try {
+    const response = await axios.get(`https://api.thingspeak.com/channels/${process.env.CHANNEL_ID}/feeds.json`, {
+      params: {
+        api_key: process.env.READ_API_KEY,
+        results: 1 // Fetch only the most recent data point
+      }
+    });
+
+    const data = response.data.feeds[0];
+    const emailContent = `Latest data from ThingSpeak: ${JSON.stringify(data)}`;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail', // e.g., 'gmail' or your email service
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.RECIPIENT_EMAIL,
+      subject: 'Latest ThingSpeak Data',
+      text: emailContent
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+  } catch (error) {
+    console.error('Error fetching data or sending email:', error);
+  }
+});
 
 app.get('/', function (req, res) {
   res.render('index');  
@@ -58,7 +94,6 @@ app.get('/fetch-data', async function (req, res) {
     res.status(500).send('Error fetching data from ThingSpeak');
   }
 });
-
 
 app.get('/aboutUs', function (req, res) {
   res.render('aboutUs');  

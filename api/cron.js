@@ -1,7 +1,7 @@
-import axios from 'axios';
-import nodemailer from 'nodemailer';
+const axios = require('axios');
+const nodemailer = require('nodemailer');
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).end('Unauthorized');
   }
@@ -41,3 +41,5 @@ export default async function handler(req, res) {
     res.status(500).send('Error fetching data or sending email');
   }
 }
+
+module.exports = handler;
