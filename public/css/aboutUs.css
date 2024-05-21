@@ -1,4 +1,26 @@
 .pfp{
     height: 300px;
     width: 300px;
+    border-radius: 50%;
 }
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust the spacing between icons */
+    margin-top: 10px; /* Adjust the spacing above the icons */
+  }
+  
+  .icon {
+    width: 30px; /* Adjust the size of the icons */
+    height: 30px; /* Adjust the size of the icons */
+  }
+
+  .navbar-brand {
+    color:#F7F8F2 !important;
+  }
+
+  .nav-link{
+    color:#F7F8F2 !important;
+  }
+  
