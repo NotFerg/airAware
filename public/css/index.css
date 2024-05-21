@@ -1,12 +1,12 @@
-.imgFeatures{
-    width: 200px;
-    height: 200px;
+.imgFeatures {
+  width: 200px;
+  height: 200px;
 }
 
 .navbar-brand {
-    color:#F7F8F2 !important;
-  }
+  color: #f7f8f2 !important;
+}
 
-  .nav-link{
-    color:#F7F8F2 !important;
-  }
+.nav-link {
+  color: #f7f8f2 !important;
+}
