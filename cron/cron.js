@@ -1,6 +1,6 @@
 const schedule = require('node-schedule');
 
-schedule.scheduleJob('15 16 * * *', async function() {
+schedule.scheduleJob('30 16 * * *', async function() {
   try {
     const response = await axios.get(`https://api.thingspeak.com/channels/${process.env.CHANNEL_ID}/feeds.json`, {
       params: {
