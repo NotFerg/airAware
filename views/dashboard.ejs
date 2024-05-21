@@ -41,105 +41,114 @@
 
   <!-- Dashboard -->
   <div id="dialog" title="Message" style="display: none;"></div>
-  <h1 class="text-center my-2">Dashboard</h1>
-  <div>
+  <h1 class="text-center my-3">Dashboard</h1>
+  <p class="text-center my-3">Welcome to the Environmental Monitoring Dashboard for De La Salle
+    University-Dasmariñas.<br> This comprehensive
+    dashboard provides real-time data on <br> key environmental parameters to ensure the safety and well-being of the
+    campus
+    community.</p>
+
     <div class="container">
       <div class="row my-5">
-        <div class="col-12 col-sm-12 col-md-6 text-center">
-          <h2>Select Date to Fetch Data</h2>
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 text-center">
-          <input type="text" id="datepicker">
+        <div class="input-group flex-nowrap">
+          <input type="text" id="datepicker" class="form-control" placeholder="Pick a date" aria-label="Username"
+            aria-describedby="addon-wrapping">
         </div>
       </div>
     </div>
     <h2 class="text-center my-5">Latest Data from ThingSpeak</h2>
-    <% if (data && data.length> 0) { %>
-      <div class="container">
-        <div class="row my-3">
-          <div class="col-12 col-sm-12 col-md-6 text-center">
-            <h1>Temperature</h1>
-            <p>The Philippines typically experiences a tropical climate with average temperatures ranging from 25°C to
-              32°C throughout the year. These temperatures can vary slightly between the dry and wet seasons, with
-              coastal areas generally being warmer.</p>
+    <section style="background-color: #CDE8E5;">
+      <% if (data && data.length> 0) { %>
+        <div class="container pt-3">
+          <div class="row my-3">
+            <div class="col-12 col-sm-12 col-md-6 text-center">
+              <h1>Temperature</h1>
+              <p>The Philippines typically experiences a tropical climate with average temperatures ranging from 25°C to
+                32°C throughout the year. These temperatures can vary slightly between the dry and wet seasons, with
+                coastal areas generally being warmer.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+              <div id="temperature-gauge"></div>
+            </div>
           </div>
-          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
-            <div id="temperature-gauge"></div>
+          <div class="row my-4">
+            <div class="col-12 col-sm-12 col-md-6 text-center">
+              <h1>Humidity</h1>
+              <p>The Philippines typically experiences high humidity levels, with average relative humidity ranging from
+                70% to 85% throughout the year. This high humidity is consistent with the country's tropical climate,
+                influenced by its proximity to the equator and surrounding seas.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+              <div id="humidity-gauge"></div>
+            </div>
+          </div>
+          <div class="row my-4">
+            <div class="col-12 col-sm-12 col-md-6 text-center">
+              <h1>Air Quality</h1>
+              <p>Air quality in the Philippines varies significantly depending on the region, with urban areas like
+                Metro
+                Manila often experiencing higher levels of pollution due to traffic and industrial activities.
+                Monitoring
+                air quality is essential to manage health risks associated with pollutants.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+              <div id="air-quality-gauge"></div>
+            </div>
+          </div>
+          <div class="row my-4">
+            <div class="col-12 col-sm-12 col-md-6 text-center">
+              <h1>Wind Speed</h1>
+              <p>In the Philippines, normal wind speeds typically range from 10 to 20 kilometers per hour (km/h) due to
+                its tropical maritime climate. However, wind speeds can increase significantly during typhoons and other
+                weather disturbances.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+              <div id="wind-speed-gauge"></div>
+            </div>
+          </div>
+          <div class="row my-4">
+            <div class="col-12 col-sm-12 col-md-6 text-center">
+              <h1>PM 1</h1>
+              <p>Particulate matter with a diameter of 1 micrometer (PM1) is a common air pollutant in urban areas of
+                the
+                Philippines, typically originating from vehicle emissions and industrial activities. Normal PM1 levels
+                are
+                generally considered safe when they are below 10 µg/m³</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+              <div id="pm1-gauge"></div>
+            </div>
+          </div>
+          <div class="row my-4">
+            <div class="col-12 col-sm-12 col-md-6 text-center">
+              <h1>PM 2.5</h1>
+              <p>In the Philippines, PM2.5 levels typically vary based on urbanization and industrial activity, with
+                rural
+                areas experiencing lower levels compared to cities like Manila. Normal PM2.5 levels are generally
+                considered safe when they are below 35 µg/m³, aligning with international air quality standards.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+              <div id="pm2.5-gauge"></div>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-12 col-sm-12 col-md-6 text-center">
+              <h1>PM 10</h1>
+              <p>In the Philippines, normal PM100 levels typically range from 0 to 50 µg/m³, with variations based on
+                factors like industrial activities, vehicular emissions, and geographical location. Monitoring PM100 is
+                essential for assessing air quality and protecting public health from the adverse effects of particulate
+                matter pollution.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
+              <div id="pm10-gauge"></div>
+            </div>
           </div>
         </div>
-        <div class="row my-4">
-          <div class="col-12 col-sm-12 col-md-6 text-center">
-            <h1>Humidity</h1>
-            <p>The Philippines typically experiences high humidity levels, with average relative humidity ranging from
-              70% to 85% throughout the year. This high humidity is consistent with the country's tropical climate,
-              influenced by its proximity to the equator and surrounding seas.</p>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
-            <div id="humidity-gauge"></div>
-          </div>
-        </div>
-        <div class="row my-4">
-          <div class="col-12 col-sm-12 col-md-6 text-center">
-            <h1>Air Quality</h1>
-            <p>Air quality in the Philippines varies significantly depending on the region, with urban areas like Metro
-              Manila often experiencing higher levels of pollution due to traffic and industrial activities. Monitoring
-              air quality is essential to manage health risks associated with pollutants.</p>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
-            <div id="air-quality-gauge"></div>
-          </div>
-        </div>
-        <div class="row my-4">
-          <div class="col-12 col-sm-12 col-md-6 text-center">
-            <h1>Wind Speed</h1>
-            <p>In the Philippines, normal wind speeds typically range from 10 to 20 kilometers per hour (km/h) due to
-              its tropical maritime climate. However, wind speeds can increase significantly during typhoons and other
-              weather disturbances.</p>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
-            <div id="wind-speed-gauge"></div>
-          </div>
-        </div>
-        <div class="row my-4">
-          <div class="col-12 col-sm-12 col-md-6 text-center">
-            <h1>PM 1</h1>
-            <p>Particulate matter with a diameter of 1 micrometer (PM1) is a common air pollutant in urban areas of the
-              Philippines, typically originating from vehicle emissions and industrial activities. Normal PM1 levels are
-              generally considered safe when they are below 10 µg/m³</p>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
-            <div id="pm1-gauge"></div>
-          </div>
-        </div>
-        <div class="row my-4">
-          <div class="col-12 col-sm-12 col-md-6 text-center">
-            <h1>PM 2.5</h1>
-            <p>In the Philippines, PM2.5 levels typically vary based on urbanization and industrial activity, with rural
-              areas experiencing lower levels compared to cities like Manila. Normal PM2.5 levels are generally
-              considered safe when they are below 35 µg/m³, aligning with international air quality standards.</p>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
-            <div id="pm2.5-gauge"></div>
-          </div>
-        </div>
-        <div class="row my-4">
-          <div class="col-12 col-sm-12 col-md-6 text-center">
-            <h1>PM 10</h1>
-            <p>In the Philippines, normal PM100 levels typically range from 0 to 50 µg/m³, with variations based on
-              factors like industrial activities, vehicular emissions, and geographical location. Monitoring PM100 is
-              essential for assessing air quality and protecting public health from the adverse effects of particulate
-              matter pollution.</p>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-center mt-2">
-            <div id="pm10-gauge"></div>
-          </div>
-        </div>
-      </div>
+        <% } else { %>
+          <p>No data available.</p>
+          <% } %>
+    </section>
 
-      <% } else { %>
-        <p>No data available.</p>
-        <% } %>
-  </div>
 
   <!-- FOOTER -->
   <section class="py-4" style="background-color: #EEF7FF;">
@@ -240,7 +249,7 @@
         width: 400, height: 150,
         redFrom: 100, redTo: 150,
         yellowFrom: 51, yellowTo: 100,
-        minorTicks: 5 ,max: 150
+        minorTicks: 5, max: 150
       };
 
       // Draw the gauges
