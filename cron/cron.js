@@ -1,11 +1,6 @@
-const axios = require('axios');
-const nodemailer = require('nodemailer');
+const schedule = require('node-schedule');
 
-async function handler(req, res) {
-  if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
-    return res.status(401).end('Unauthorized');
-  }
-
+schedule.scheduleJob('15 16 * * *', async function() {
   try {
     const response = await axios.get(`https://api.thingspeak.com/channels/${process.env.CHANNEL_ID}/feeds.json`, {
       params: {
@@ -34,12 +29,7 @@ async function handler(req, res) {
 
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');
-
-    res.status(200).send('Email sent successfully');
   } catch (error) {
     console.error('Error fetching data or sending email:', error);
-    res.status(500).send('Error fetching data or sending email');
   }
-}
-
-module.exports = handler;
+});
