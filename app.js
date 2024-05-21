@@ -3,8 +3,6 @@ const app = express();
 const path = require('path');
 const axios = require('axios');
 const dotenv = require('dotenv');
-const cron = require('node-cron');
-const nodemailer = require('nodemailer');
 
 dotenv.config();
 app.set("view engine", "ejs");
@@ -61,35 +59,6 @@ app.get('/fetch-data', async function (req, res) {
   }
 });
 
-// Function to fetch data from ThingSpeak and send an email
-const sendEmailWithThingSpeakData = async () => {
-  try {
-    const response = await axios.get(`https://api.thingspeak.com/channels/${process.env.CHANNEL_ID}/feeds.json`, {
-      params: {
-        api_key: process.env.READ_API_KEY,
-        results: 1 // Fetch only the most recent data point
-      }
-    });
-
-    const data = response.data.feeds[0];
-    const emailContent = `Latest data from ThingSpeak: ${JSON.stringify(data)}`;
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.RECIPIENT_EMAIL,
-      subject: 'Latest ThingSpeak Data',
-      text: emailContent
-    };
-
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully');
-  } catch (error) {
-    console.error('Error fetching data or sending email:', error);
-  }
-};
-
-// Schedule the task to run every 30 minutes
-cron.schedule('*/30 * * * *', sendEmailWithThingSpeakData);
 
 app.get('/aboutUs', function (req, res) {
   res.render('aboutUs');  
